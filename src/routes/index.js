@@ -6,61 +6,91 @@
  */
 
 export default [
-  // Home
-  {
-    path: '/',
-    name: 'home.index',
-    component: () => import('@/views/Home/Index.vue'),
+    // Home
+    {
+        path: '/',
+        name: 'home.index',
+        component: () => import('@/views/Home/Index.vue'),
 
-    // If the user needs to be authenticated to view this page
-    meta: {
-      auth: false,
+        // If the user needs to be authenticated to view this page
+        meta: {
+            auth: false,
+        },
+    }, {
+        path: '/view/:id',
+        name: 'home.view',
+        component: () => import('@/views/Home/Product.vue'),
+        // If the user needs to be authenticated to view this page
+        meta: {
+            auth: false,
+        },
     },
-  },
 
-  // Account
-  {
-    path: '/account',
-    name: 'account.index',
-    component: () => import('@/views/Account/Index.vue'),
+    // Account
+    {
+        path: '/account',
+        name: 'account.index',
+        component: () => import('@/views/Account/Index.vue'),
 
-    // If the user needs to be authenticated to view this page.
-    meta: {
-      auth: true,
+        // If the user needs to be authenticated to view this page.
+        meta: {
+            auth: true,
+        },
     },
-  },
 
-  // Login
-  {
-    path: '/login',
-    name: 'login.index',
-    component: () => import('@/views/Login/Index.vue'),
-
-    // If the user needs to be a guest to view this page.
-    meta: {
-      guest: true,
+    // Admin
+    {
+        path: '/admin',
+        component: () => import('@/views/Admin/Index.vue'),
+        children: [
+            {
+                path: '',
+                name: 'admin',
+                component: () => import('@/views/Admin/AllOrders.vue'),
+            },
+            {
+                path: '/create',
+                name: 'admin.createStoreItem',
+                component: () => import('@/views/Admin/NewStoreItem.vue'),
+            },
+        ],
+        // If the user needs to be authenticated to view this page.
+        meta: {
+            auth: false,
+        },
     },
-  },
 
-  // Register
-  {
-    path: '/register',
-    name: 'register.index',
-    component: () => import('@/views/Register/Index.vue'),
+    // Login
+    {
+        path: '/login',
+        name: 'login.index',
+        component: () => import('@/views/Login/Index.vue'),
 
-    // If the user needs to be a guest to view this page.
-    meta: {
-      guest: true,
+        // If the user needs to be a guest to view this page.
+        meta: {
+            guest: true,
+        },
     },
-  },
 
-  {
-    path: '/',
-    redirect: '/home',
-  },
+    // Register
+    {
+        path: '/register',
+        name: 'register.index',
+        component: () => import('@/views/Register/Index.vue'),
 
-  {
-    path: '/*',
-    redirect: '/home',
-  },
+        // If the user needs to be a guest to view this page.
+        meta: {
+            guest: true,
+        },
+    },
+
+    {
+        path: '/',
+        redirect: '/home',
+    },
+
+    {
+        path: '/*',
+        redirect: '/home',
+    },
 ];

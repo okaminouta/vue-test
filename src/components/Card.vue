@@ -1,11 +1,11 @@
 <template>
 
-    <div class="card w-100" style="width: 18rem;">
+    <div class="card w-100">
         <img class="card-img-top" :src="item.image" alt="Card image cap">
-        <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                the
-                card's content.</p>
+        <div class="card-title px-3 py-1 font-weight-bold text-center"> {{item.title}}</div>
+        <div class="card-title d-flex justify-content-between px-3 align-items-center">Price: {{item.price}} <button class="btn btn-primary">Buy</button></div>
+        <div class="card-body pt-0">
+            <p class="card-text">{{item.desc}}</p>
         </div>
     </div>
     <!--&lt;!&ndash;<div @click="isClickable ? onCardClick(item, type) : ''"&ndash;&gt;-->
@@ -74,69 +74,86 @@
 </template>
 
 <script>
-    // import Creds from './userNameAndAvatar.vue'
-    export default {
-        name: 'card',
-        props: {
-            item: {type: Object}
-        },
-        data() {
-            return {};
-        },
-        computed: {
-            passDue() {
-                return this.$moment() < this.$moment(this.item.due_datetime)
-            },
-            lastViewed() {
-                return this.item.viewer ? `${this.$moment(this.item.last_viewed_at).format("MMM d, YYYY")} by` : 'N/A';
-            }
-        },
-        directives: {
-            cardHeader: {
-                inserted(el, binding, vnode) {
-                    let color = '#4db78a';
-                    switch (binding.value) {
-                        case  'Tasks::OnboardingTask':
-                            color = '#69ade6';
-                            break;
-                        case  'report':
-                            color = 'white';
-                            break;
-                    }
-                    el.style.backgroundColor = color;
-                }
-            }
-        },
-        components: {
-            // Creds,
-        }
-    };
+  // import Creds from './userNameAndAvatar.vue'
+  export default {
+    name: 'card',
+    props: {
+      item: {type: Object}
+    },
+    data() {
+      return {};
+    },
+    // computed: {
+    //     passDue() {
+    //         return this.$moment() < this.$moment(this.item.due_datetime)
+    //     },
+    //     lastViewed() {
+    //         return this.item.viewer ? `${this.$moment(this.item.last_viewed_at).format("MMM d, YYYY")} by` : 'N/A';
+    //     }
+    // },
+    // directives: {
+    //     cardHeader: {
+    //         inserted(el, binding, vnode) {
+    //             let color = '#4db78a';
+    //             switch (binding.value) {
+    //                 case  'Tasks::OnboardingTask':
+    //                     color = '#69ade6';
+    //                     break;
+    //                 case  'report':
+    //                     color = 'white';
+    //                     break;
+    //             }
+    //             el.style.backgroundColor = color;
+    //         }
+    //     }
+    // },
+    // components: {
+    //     // Creds,
+    // }
+  };
 </script>
 
 <style scoped type="scss" lang="scss">
     .card {
-        height: 100%;
+        height: auto;
+        color: #565454;
         opacity: .85;
-        transition: all .2s cubic-bezier(.57,.39,.43,.95),
+        transition: all .2s cubic-bezier(.57, .39, .43, .95),
         height .3s cubic-bezier(0, .93, .91, 1),
         opacity .3s cubic-bezier(0, .93, .91, 1);
         z-index: 1;
+        overflow: hidden;
+        p {
+            max-height: 100px;
+            overflow: hidden;
+        }
         img {
             overflow: hidden;
             height: auto;
+            min-height: 100px;
             max-width: 500px;
         }
         &:hover {
             transform: scale(1.01);
-            height: 150%;
+            /*height: 150%;*/
             opacity: 1;
             /*transition: height 2s ease-in;*/
-            z-index: 2;
+            position: absolute;
+            left: -1px;
+            top: -1px;
+            z-index: 10;
+            overflow: hidden;
+
             -webkit-box-shadow: 0px 0px 40px 0px rgba(133, 133, 133, 1);
             -moz-box-shadow: 0px 0px 40px 0px rgba(133, 133, 133, 1);
             box-shadow: 0px 0px 40px 0px rgba(133, 133, 133, 1);
-            transition: all .2s cubic-bezier(.57,.39,.43,.95), z-index .3s cubic-bezier(0, .93, .91, 1),
+            transition: all .4s cubic-bezier(.57, .39, .43, .95),
             height .3s cubic-bezier(0, .93, .91, 1);
+            p {
+                max-height: 200px;
+                transition: all .2s cubic-bezier(.57, .39, .43, .95);
+                overflow: hidden;
+            }
         }
         /*height: 300px;*/
         /*margin: 16px 0;*/

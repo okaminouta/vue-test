@@ -40,6 +40,7 @@ import './plugins/register-service-worker';
  */
 
 import './assets/stylus/app.styl';
+import 'vue-croppa/dist/vue-croppa.css'
 
 /* ============
  * Main App
@@ -47,6 +48,10 @@ import './assets/stylus/app.styl';
  *
  * Last but not least, we import the main application.
  */
+import Croppa from 'vue-croppa'
+
+Vue.use(Croppa)
+
 
 import App from './App.vue';
 import store from './store';
