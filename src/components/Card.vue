@@ -1,122 +1,41 @@
 <template>
 
     <div class="card w-100">
-        <img class="card-img-top" :src="item.image" alt="Card image cap">
+        <!--<img class="card-img-top" :src="item.image" alt="Card image cap">-->
+        <img class="card-img-top" src="http://localhost:8081/api/image/5bb0dd0e195761240c07c799" alt="Card image cap">
         <div class="card-title px-3 py-1 font-weight-bold text-center"> {{item.title}}</div>
-        <div class="card-title d-flex justify-content-between px-3 align-items-center">Price: {{item.price}} <button class="btn btn-primary">Buy</button></div>
+        <div class="card-title d-flex justify-content-between px-3 align-items-center xwr">Price: {{item.price}}
+            <button class="btn btn-primary" @click="action(item)">Buy</button>
+        </div>
         <div class="card-body pt-0">
-            <p class="card-text">{{item.desc}}</p>
+            <p class="card-text">{{item.description}}</p>
         </div>
     </div>
-    <!--&lt;!&ndash;<div @click="isClickable ? onCardClick(item, type) : ''"&ndash;&gt;-->
-    <!--&lt;!&ndash;class="card w-100 d-flex"&ndash;&gt;-->
-    <!--&lt;!&ndash;:class="[{'cursor-pointer': isClickable}, type === 'Tasks::OnboardingTask' ? 'onboarding' : type]"&ndash;&gt;-->
-    <!--&lt;!&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;_task_card.html.slim&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="loader d-flex justify-content-center align-items-center" v-if="item.loading">&ndash;&gt;-->
-    <!--&lt;!&ndash;<spinner :size="50"></spinner>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="card-header bg-active" v-cardHeader="type"></div>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="card-body">&ndash;&gt;-->
 
-    <!--&lt;!&ndash;<div class="card-title">&ndash;&gt;-->
-    <!--&lt;!&ndash;<span>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div v-if="item.attachment" class="nc-icon icon-vm icon-sm nc-clip"></div>&ndash;&gt;-->
-    <!--&lt;!&ndash;<img v-if="item.image" :src="item.image" alt="Icon"/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<span v-if="!item.title && type === 'FollowUpTask'">Follow Up</span>&ndash;&gt;-->
-    <!--&lt;!&ndash;<span>{{item.title}}</span>&ndash;&gt;-->
-
-    <!--&lt;!&ndash;</span>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div v-if="onActionsButtonClick" @click="onActionsButtonClick(item, type)" class="cursor-pointer">&ndash;&gt;-->
-    <!--&lt;!&ndash;<span class="nc-icon icon-md nc-ellipsis-v"></span>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;<p class="card-text grow-1">&ndash;&gt;-->
-    <!--&lt;!&ndash;{{item.instructions}}&ndash;&gt;-->
-    <!--&lt;!&ndash;</p>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="d-flex justify-content-between align-items-center task-card-footer">&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<div v-if="item.driver_applicant">&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<creds&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;:photo="item.driver_applicant.profile_photo_path"&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;:fName="item.driver_applicant.first_name"&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;:lName="item.driver_applicant.last_name"&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;&gt;</creds>&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<div v-if="type === 'report'" class="overflow-ellipsis">&ndash;&gt;-->
-    <!--&lt;!&ndash;<span class="text-muted">Last viewed:</span> {{lastViewed}}&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<creds v-if="item.viewer"&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;class="pl-1"&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;:photo="item.viewer.profile_photo_path"&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;:fName="item.viewer.first_name"&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;:lName="item.viewer.last_name"&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;size="small"&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;&gt;</creds>&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<div v-if="item.due_datetime && item.status !== 'completed'"&ndash;&gt;-->
-    <!--&lt;!&ndash;:class="passDue ? 'color-grey' : 'color-accent-3'"&ndash;&gt;-->
-    <!--&lt;!&ndash;class="pull-right"&ndash;&gt;-->
-    <!--&lt;!&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;<span> {{ item.due_datetime | moment('calendar', null, {&ndash;&gt;-->
-    <!--&lt;!&ndash;sameDay: '[Today]',&ndash;&gt;-->
-    <!--&lt;!&ndash;nextDay: '[Tomorrow]',&ndash;&gt;-->
-    <!--&lt;!&ndash;nextWeek: 'dddd',&ndash;&gt;-->
-    <!--&lt;!&ndash;lastDay: '[Yesterday]',&ndash;&gt;-->
-    <!--&lt;!&ndash;lastWeek: '[Last] dddd',&ndash;&gt;-->
-    <!--&lt;!&ndash;sameElse: 'MM/DD/YYYY'&ndash;&gt;-->
-    <!--&lt;!&ndash;})}}</span>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--</div>-->
 </template>
 
 <script>
-  // import Creds from './userNameAndAvatar.vue'
+
+
   export default {
     name: 'card',
     props: {
-      item: {type: Object}
+      item: {type: Object},
+      action: {type: Function},
     },
     data() {
       return {};
     },
-    // computed: {
-    //     passDue() {
-    //         return this.$moment() < this.$moment(this.item.due_datetime)
-    //     },
-    //     lastViewed() {
-    //         return this.item.viewer ? `${this.$moment(this.item.last_viewed_at).format("MMM d, YYYY")} by` : 'N/A';
-    //     }
-    // },
-    // directives: {
-    //     cardHeader: {
-    //         inserted(el, binding, vnode) {
-    //             let color = '#4db78a';
-    //             switch (binding.value) {
-    //                 case  'Tasks::OnboardingTask':
-    //                     color = '#69ade6';
-    //                     break;
-    //                 case  'report':
-    //                     color = 'white';
-    //                     break;
-    //             }
-    //             el.style.backgroundColor = color;
-    //         }
-    //     }
-    // },
-    // components: {
-    //     // Creds,
-    // }
+    methods: {}
   };
 </script>
 
 <style scoped type="scss" lang="scss">
     .card {
+        font-family: 'GS';
         height: auto;
-        color: #565454;
+        font-size: 1.88vh;
+        color: #181b18;
         opacity: .85;
         transition: all .2s cubic-bezier(.57, .39, .43, .95),
         height .3s cubic-bezier(0, .93, .91, 1),
@@ -126,6 +45,7 @@
         p {
             max-height: 100px;
             overflow: hidden;
+            font-size: 1rem;
         }
         img {
             overflow: hidden;
@@ -181,5 +101,8 @@
         height: 100%;
         background: rgba(210, 215, 219, 0.2);
         z-index: 10;
+    }
+    .xwr {
+        font-weight: 600;
     }
 </style>

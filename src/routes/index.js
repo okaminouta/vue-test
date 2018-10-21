@@ -16,10 +16,20 @@ export default [
         meta: {
             auth: false,
         },
-    }, {
+    },
+    {
         path: '/view/:id',
         name: 'home.view',
         component: () => import('@/views/Home/Product.vue'),
+        // If the user needs to be authenticated to view this page
+        meta: {
+            auth: false,
+        },
+    },
+    {
+        path: '/cart',
+        name: 'home.cart',
+        component: () => import('@/views/Home/Cart.vue'),
         // If the user needs to be authenticated to view this page
         meta: {
             auth: false,

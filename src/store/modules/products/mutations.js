@@ -20,5 +20,8 @@ export default {
         // Vue.set(state.products.items, "loading", true);
         state.goods.items.push(payload);
     },
+    loadProducts: (state, payload) => {
+      Vue.set(state.goods, "items", payload);
+    },
 
 };

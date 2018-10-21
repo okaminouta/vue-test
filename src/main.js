@@ -49,7 +49,9 @@ import 'vue-croppa/dist/vue-croppa.css'
  * Last but not least, we import the main application.
  */
 import Croppa from 'vue-croppa'
+import VModal from 'vue-js-modal'
 
+Vue.use(VModal, { dynamic: true })
 Vue.use(Croppa)
 
 

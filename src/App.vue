@@ -1,10 +1,21 @@
 <!--npm run serve -->
 <template>
-    <div id="app">
-        <div class="header" :class="[scroll > 100 ? 'fixed-header':'']">
-            <div class="header-logo">HotChocolate</div>
+    <div id="app" :class="[scroll > 90 ? 'fixed-header-app-padding':'']">
+        <div class="header" :class="[scroll > 90 ? 'fixed-header':'']">
+          <transition
+            mode="out-in"
+            name="fade"
+            appear>
+            <div class="header-logo full-logo" key="full" v-if="scroll < 90"><p class="m-0">HotChocolate</p></div>
+            <div class="header-logo small-logo" key="small" v-else><p class="m-0">HotChocolate</p></div>
+          </transition>
+            <div class="nav">
+                <div><router-link tag="span" class="cursor-pointer" :to="{ name: 'admin'}">admin</router-link></div>
+                <div><router-link tag="span" class="cursor-pointer" :to="{ name: 'home.index'}">home</router-link></div>
+                <div><router-link tag="span" class="cursor-pointer" :to="{ name: 'home.cart'}">cart</router-link></div>
+            </div>
         </div>
-        <div class="w-100 content-overlay">
+        <div class="w-100 content-overlay ">
             <router-view/>
         </div>
         <footer class="align-items-center">
@@ -19,6 +30,7 @@
                 2018
                 <img class="copy" src="./assets/images/copyright-regular.svg" alt=""></div>
         </footer>
+        <modals-container/>
     </div>
 </template>
 <script>
@@ -73,15 +85,24 @@
         margin: 0 auto;
 
     }
+    /*.opacity-1{*/
+      /*opacity: 1 !important;*/
+    /*}*/
+    /*.opacity-0{*/
+      /*opacity: 0 !important;*/
+    /*}*/
 
     #app {
 
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         overflow: hidden;
-        color: #d3d3d3;
+        color: rgba(0, 0, 0, 0.87);
         margin: 0;
         padding-top: 30vh;
+        transition: all .2s ease-in;
+        font-family: 'GS';
+        font-size: 1rem;
     }
 
     .router-view {
@@ -99,6 +120,7 @@
     }
 
     .header {
+        color: white;
         width: 100%;
         -webkit-box-align: center;
         -ms-flex-align: center;
@@ -107,9 +129,9 @@
         display: -ms-flexbox;
         display: flex;
         height: 30vh;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
+        /*-webkit-box-pack: center;*/
+        /*-ms-flex-pack: center;*/
+        /*justify-content: center;*/
         overflow: hidden;
         text-align: center;
         -webkit-transform-style: preserve-3d;
@@ -117,22 +139,28 @@
         -webkit-perspective: 100px;
         perspective: 100px;
         font-size: 100px;
-        font-family: 'test';
+        font-family: 'GS';
+        font-weight: bold;
         position: fixed;
         right: 0;
         top: 0;
-        transition: z-index .8s ease-in,
-        all .2s ease-in;
+        transition:  all .2s ease-in;
         z-index: 10;
-        &-logo {
-            -webkit-animation: fade-slide-down 2s .5s cubic-bezier(0, 0.5, 0, 1) forwards;
-            animation: fade-slide-down 2s .5s cubic-bezier(0, 0.5, 0, 1) forwards;
-            opacity: 0;
-            transition: opacity .5s;
-        }
-        &-logo:before {
-            opacity: 1;
-        }
+        /*&-logo {*/
+            /*!*-webkit-animation: fade-slide-down 2s .5s cubic-bezier(0, 0.5, 0, 1) forwards;*!*/
+            /*!*animation: fade-slide-down 2s .5s cubic-bezier(0, 0.5, 0, 1) forwards;*!*/
+            /*!*opacity: 0;*!*/
+            /*!*transition: all .5s ease-out;*!*/
+          /*!*p {*!*/
+            /*!*transition: opacity .3s ease-in-out;*!*/
+            /*!*&:nth-child(2) {*!*/
+              /*!*transition-delay: 2s;*!*/
+            /*!*}*!*/
+          /*!*}*!*/
+        /*}*/
+        /*&-logo:before {*/
+            /*opacity: 1;*/
+        /*}*/
     }
 
     footer {
@@ -159,6 +187,20 @@
         padding-left: 20px;
         position: fixed;
         height: 80px;
+        /*justify-content: left;*/
+    }
+
+    .small-logo {
+      font-size: 45px;
+      /*position: absolute;*/
+      left: 5vw;
+      top: 10px;
+      position: fixed;
+    }
+    .full-logo {
+      font-size: 100px;
+      margin-left: calc(50% - 300px);
+      margin-right: auto;
     }
 
     .header:before {
@@ -178,7 +220,42 @@
         top: 0;
         z-index: -1;
     }
+.fixed-header-app-padding {
+    padding-top: 20vh !important;
+}
 
+.nav {
+    font-size: 20px;
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    div {
+        padding: 0 10px;
+        border-left: 1px solid #7cffe1;
+    }
+}
+
+    .fade-enter {
+      opacity: 0;
+    }
+    .fade-enter-active {
+      transition: opacity 0.9s;
+    }
+    .fade-leave {
+      opacity: 1;
+    }
+    .fade-leave-active {
+      transition: opacity .1s;
+      transform: translateX(-90rem);
+      opacity: 0;
+    }
+
+.cursor-pointer {
+    cursor: pointer;
+}
+.font-20{
+  font-size: 20px;
+}
     /* Animations */
 
     @-webkit-keyframes fade-slide-down {
@@ -195,10 +272,25 @@
     }
 
     @font-face {
-        font-family: "test";
+        font-family: "GS";
         src: url('assets/fonts/Gill_Sans_Nova_Semibold.otf');
-        font-weight: 400;
+        font-weight: bold;
         font-style: normal;
-        font-size: 100px;
+        /*font-size: 100px;*/
     }
+    @font-face {
+        font-family: "GS";
+        src: url('assets/fonts/GillSansNovaLight.otf');
+        /*font-weight: 800;*/
+        font-style: normal;
+        /*font-size: 100px;*/
+    }
+    @font-face {
+        font-family: "GS";
+        src: url('assets/fonts/GillSansNovaHeavyItalic.otf');
+        font-weight: 900;
+        font-style: normal;
+        /*font-size: 100px;*/
+    }
+
 </style>
