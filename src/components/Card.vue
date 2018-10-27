@@ -1,8 +1,8 @@
 <template>
 
-    <div class="card w-100">
-        <!--<img class="card-img-top" :src="item.image" alt="Card image cap">-->
-        <img class="card-img-top" src="http://localhost:8081/api/image/5bb0dd0e195761240c07c799" alt="Card image cap">
+    <div class="card w-100 h-100">
+        <img v-if="item.cover" class="card-img-top" :src="`http://localhost:8081/api/image/${item.cover}`" alt="Card image cap">
+        <!--<img class="card-img-top" src="http://localhost:8081/api/image/5bb0dd0e195761240c07c799" alt="Card image cap">-->
         <div class="card-title px-3 py-1 font-weight-bold text-center"> {{item.title}}</div>
         <div class="card-title d-flex justify-content-between px-3 align-items-center xwr">Price: {{item.price}}
             <button class="btn btn-primary" @click="action(item)">Buy</button>
@@ -11,7 +11,6 @@
             <p class="card-text">{{item.description}}</p>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -34,7 +33,7 @@
     .card {
         font-family: 'GS';
         height: auto;
-        font-size: 1.88vh;
+        font-size: 1.3rem;
         color: #181b18;
         opacity: .85;
         transition: all .2s cubic-bezier(.57, .39, .43, .95),
@@ -42,6 +41,7 @@
         opacity .3s cubic-bezier(0, .93, .91, 1);
         z-index: 1;
         overflow: hidden;
+      max-width: 500px;
         p {
             max-height: 100px;
             overflow: hidden;
@@ -58,9 +58,7 @@
             /*height: 150%;*/
             opacity: 1;
             /*transition: height 2s ease-in;*/
-            position: absolute;
-            left: -1px;
-            top: -1px;
+            /*position: absolute;*/
             z-index: 10;
             overflow: hidden;
 
@@ -70,7 +68,7 @@
             transition: all .4s cubic-bezier(.57, .39, .43, .95),
             height .3s cubic-bezier(0, .93, .91, 1);
             p {
-                max-height: 200px;
+                /*max-height: 200px;*/
                 transition: all .2s cubic-bezier(.57, .39, .43, .95);
                 overflow: hidden;
             }
@@ -95,14 +93,14 @@
         /*}*/
     }
 
-    .loader {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: rgba(210, 215, 219, 0.2);
-        z-index: 10;
-    }
-    .xwr {
-        font-weight: 600;
-    }
+    /*.loader {*/
+        /*position: absolute;*/
+        /*width: 100%;*/
+        /*height: 100%;*/
+        /*background: rgba(210, 215, 219, 0.2);*/
+        /*z-index: 10;*/
+    /*}*/
+    /*.xwr {*/
+        /*font-weight: 600;*/
+    /*}*/
 </style>

@@ -22,6 +22,7 @@ import './plugins/vuex-router-sync';
 import './plugins/bootstrap';
 import './plugins/font-awesome';
 import './plugins/register-service-worker';
+import "./plugins/Spinner";
 
 /* ============
  * Styling
@@ -41,6 +42,7 @@ import './plugins/register-service-worker';
 
 import './assets/stylus/app.styl';
 import 'vue-croppa/dist/vue-croppa.css'
+import "./main.scss";
 
 /* ============
  * Main App

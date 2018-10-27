@@ -12,7 +12,7 @@
 
 			<div class="form-group">
 				<label for="ItemDesc">Descroption</label>
-				<textarea class="form-control" id="ItemDesc" rows="3" v-model="item.desc"></textarea>
+				<textarea class="form-control" id="ItemDesc" rows="3" v-model="item.description"></textarea>
 			</div>
 
 			<div class="form-group">
@@ -54,7 +54,7 @@
 					:item="item"
 				></card>
 			</div>
-			<img src="http://localhost:8081/api/image/5bb0dd0e195761240c07c799" alt="">
+			<!--<img src="http://localhost:8081/api/image/5bb0dd0e195761240c07c799" alt="">-->
 		</div>
 	</div>
 </template>
@@ -71,7 +71,7 @@
 				myCroppa: {},
 				item: {
 					title: '',
-					desc: '',
+          description: '',
 					price: '0',
 					image: '',
 					hidden: false

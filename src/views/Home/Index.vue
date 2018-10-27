@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="mb-4">
-            <transition-group appear name="list" tag="div" class="d-flex justify-content-center row">
+            <transition-group appear name="list" tag="div" class=" justify-content-center row">
                 <!--v-if="index < limit"-->
                 <div class="col-xl-3 col-lg-6 mb-3" v-for="(card,index) in  cards" :key="index"
                      @click="showProduct(card.id)">
@@ -91,8 +91,11 @@
           item,
         }, {
           draggable: false,
-          width: "50%",
-          height: 'auto'
+          width: "70%",
+          height: 'auto',
+          // adaptive: true,
+          // classes: ['overflow']
+          classes: []
         })
       },
       showProduct(id) {
@@ -137,4 +140,15 @@
             padding: 0 !important;
         }
     }
+  .card-container {
+    /*transition: all .5s ease-in;*/
+    /*&:last-child {*/
+      /*&:hover {*/
+        /*!*min-height: 550px;*!*/
+      /*}*/
+    /*}*/
+    /*min-height: 400px;*/
+    max-width: 500px;
+
+  }
 </style>

@@ -1,19 +1,20 @@
 <template>
-  <div class="container-fluid product pb-3">
+  <div class="container-fluid product">
     <div class="row">
-      <div class="col-4 product-image-container py-3 ">
+      <div class="col-4 col-xl-3 product-image-container py-3 ">
         <div class="row justify-content-center align-items-center h-100">
-          <div class="col-12">
+          <div class="col-12 product-img-container">
 
-            <!--<img class="product-image" :src="item.image" alt="Card image cap">-->
-            <img class="product-image" src="http://localhost:8081/api/image/5bb0dd0e195761240c07c799"
-                 alt="Card image cap">
+            <img class="product-img-top" :src="`http://localhost:8081/api/image/${item.cover}`" alt="Card image cap">
+            <!--<img class="product-image" src="http://localhost:8081/api/image/5bb0dd0e195761240c07c799"-->
+                 <!--alt="Card image cap">-->
           </div>
         </div>
 
       </div>
-      <div class="col-8">
-        <div class="col-12 p-0">
+      <div class="col-8 col-xl-9  product-text-pseudo-container">
+        <div class="col-12 product-text-container pb-3 h-100" >
+        <div class="col-12 p-0" >
           <p class="product-title">{{item.title}}<span class="pull-right product-title-close" @click="$emit('close')">
                     ❌
                 </span></p>
@@ -45,6 +46,7 @@
             </div>
           </div>
         </div>
+        </div>
       </div>
     </div>
   </div>
@@ -54,8 +56,6 @@
   import Card from '../../components/Card';
 
   export default {
-    mounted() {
-    },
     props: {
       item: {type: Object}
     },
@@ -72,6 +72,13 @@
         return this.item.price * this.quantity;
       }
     },
+    mounted() {
+      // v--modal
+      // let el = document.getElementsByClassName('v--modal')[0];
+      // console.log(el)
+      // el.style.overflow='visible';
+      // el.classList.add("overflow");
+    },
     methods: {
       changeQuantity(val) {
         if (this.quantity > 0 || val > 0) this.quantity += val;
@@ -81,10 +88,13 @@
 </script>
 
 <style lang="scss" type="scss" scoped>
+  .overflow{
+    overflow: visible;
+  }
   .product {
     color: black;
     /*max-height: 50vh;*/
-    padding: 10px;
+    /*padding: 10px;*/
     &-title {
       font-size: 40px;
       font-weight: bold;
@@ -92,15 +102,40 @@
         font-size: 25px;
         padding: 10px;
         color: #969696;
+        cursor: pointer;
         &:hover {
           color: black;
         }
       }
     }
-    &-image {
-      width: inherit;
-      height: inherit;
-      max-height: 40vh;
+
+    &-text-pseudo-container{
+      background: #bfbfbf;
+      padding: 0 0 0 200px;
+      border-radius: 20px 0 0 20px;
+    }
+    &-text-container{
+      background: white;
+      padding-left: 20px
+    }
+
+    &-image-container {
+      /*width: inherit;*/
+      /*height: inherit;*/
+      /*max-height: 40vh;*/
+      /*background:  #d4d4d4;*/
+      z-index: 99;
+    }
+    &-img-top{
+      height: 16vw;
+      width: 24vw;
+      min-height: 250px;
+      min-width: 375px;
+      /*<!--margin-left: -390px;-->*/
+      border: 3px solid white;
+      -webkit-box-shadow: 25px 16px 55px 9px rgb(134, 129, 129);
+      -moz-box-shadow: 25px 16px 55px 9px rgb(134, 129, 129);
+      box-shadow: 25px 16px 55px 9px rgb(134, 129, 129);
     }
     &-price {
       &-value {
