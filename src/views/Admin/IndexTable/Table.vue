@@ -1,6 +1,6 @@
 <template>
   <datatable
-    url="/frontend/sms_campaigns"
+    url="http://localhost:8081/api/"
     :fields="fields"
     :sort-order="sortOrder"
     module-name="SMS Campaign"
@@ -26,7 +26,7 @@
 <script>
 import Datatable from "@/components/Datatable/Index";
 import TRowAction from "./RowOptions";
-import TRouterLink from "./RouterLink";
+import TRouterLink from "./SlotImage";
 
 export default {
   name: "SmsCampaignsTable",
@@ -40,32 +40,38 @@ export default {
       fields: [
         {
           name: "__slot:firstCol",
-          title: "Name",
+          title: "Image",
           sortField: "name",
         },
         {
-          name: "code",
-          title: "Code",
-          sortField: "code",
+          name: "title",
         },
         {
-          name: "response",
-          title: "Response",
-          sortField: "response",
-          dataClass: "response text-overflow-elipsis",
-          titleClass: "response",
+          name: "description",
+          dataClass: "description",
         },
         {
-          name: "subscribers_count",
-          title: "Subscribers",
-          sortField: "subscribers_count",
+          name: "price",
+          sortField: "price",
         },
-        {
-          name: "__slot:action",
-          title: "",
-          dataClass: "tableAction",
-          titleClass: "tableAction",
-        },
+        // {
+        //   name: "response",
+        //   title: "Response",
+        //   sortField: "response",
+        //   dataClass: "response text-overflow-elipsis",
+        //   titleClass: "response",
+        // },
+        // {
+        //   name: "subscribers_count",
+        //   title: "Subscribers",
+        //   sortField: "subscribers_count",
+        // },
+        // {
+        //   name: "__slot:action",
+        //   title: "",
+        //   dataClass: "tableAction",
+        //   titleClass: "tableAction",
+        // },
       ],
       sortOrder: {
         field: "name",
@@ -86,8 +92,9 @@ export default {
     th {
       min-width: 200px;
     }
-    .response{
+    .description{
       width: 40%;
+      overflow: hidden;
     }
   }
 </style>

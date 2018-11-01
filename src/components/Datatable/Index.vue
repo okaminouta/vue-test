@@ -9,12 +9,12 @@
         v-if="tableLoading"
         class="loader d-flex justify-content-center align-items-center"
       >
-        <spinner
-          :size="150"
-          margin="0"
-          :speed="1.2"
-          line-fg-color="#69ade6"
-        />
+        <!--<spinner-->
+          <!--:size="150"-->
+          <!--margin="0"-->
+          <!--:speed="1.2"-->
+          <!--line-fg-color="#69ade6"-->
+        <!--/>-->
       </div>
       <div class="table-container">
         <vuetable
@@ -93,8 +93,9 @@ export default {
         tableClass: "selectable table",
         loadingClass: "loading",
         detailRowClass: "vuetable-detail-row",
+        ascendingIcon:  'blue chevron up icon',
+        descendingIcon: 'blue chevron down icon',
         handleIcon: "grey sidebar icon",
-        sortableIcon: "nc-icon icon-md nc-angle-down", // since v1.7
         ascendingClass: "sorted-asc",
         descendingClass: "sorted-desc",
       },

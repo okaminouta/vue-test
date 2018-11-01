@@ -39,7 +39,8 @@
                 <div class="d-flex px-4 my-2">
                   <span class="product-total-label mr-3">Сумма: </span><span
                   class="  bold-text p-2 product-total-value"> {{total}}  ₴</span>
-                  <button class="btn btn-success mx-3">Добавить в корзину</button>
+                  <button class="btn btn-success mx-3" @click="addToCart" style="width:156px;">
+                    <LoadingText :loading="loading" loadingText="Adding">Добавить в корзину</LoadingText> </button>
                 </div>
 
               </div>
@@ -54,6 +55,7 @@
 
 <script>
   import Card from '../../components/Card';
+  import LoadingText from '@/components/shared/inlineLoadingText.vue';
 
   export default {
     props: {
@@ -61,10 +63,12 @@
     },
     components: {
       Card,
+      LoadingText
     },
     data() {
       return {
         quantity: 1,
+        loading: false
       }
     },
     computed: {
@@ -82,7 +86,12 @@
     methods: {
       changeQuantity(val) {
         if (this.quantity > 0 || val > 0) this.quantity += val;
-      }
+      },
+      addToCart() {
+        this.loading=true;
+        this.$store.commit("products/addToCart", {...this.item, quantity: this.quantity })
+        setTimeout( ()=> {this.loading = false }, 3000)
+      },
     },
   };
 </script>

@@ -23,5 +23,8 @@ export default {
     loadProducts: (state, payload) => {
       Vue.set(state.goods, "items", payload);
     },
+  addToCart: (state, payload) => {
+      state.cart.push(payload);
+    },
 
 };

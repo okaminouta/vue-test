@@ -8,8 +8,7 @@
       <span
         v-if="loading"
         key="loading"
-        class="text-muted"
-      >Loading
+      >{{ loadingText }}
         <div class="wave-animation">
           <span class="dot" />
           <span class="dot" />
@@ -17,13 +16,13 @@
         </div>
       </span>
       <span
-        v-if="!loading && !empty"
+        v-if="!loading "
         key="title"
       >
         <slot />
       </span>
       <span
-        v-if="empty"
+        v-if="false"
         key="empty"
       >Nothing here ...</span>
     </transition>
@@ -35,7 +34,7 @@ export default {
   name: "Loader",
   props: {
     loading: { type: Boolean, default: true },
-    empty: { type: Boolean, default: false },
+    loadingText: { type: String, default: "Loading" },
   },
 };
 </script>
@@ -44,14 +43,14 @@ export default {
   .wave-animation {
     text-align:center;
     display: inline-block;
-    padding: 0 5px;
+    padding: 0 3px;
     .dot {
       display:inline-block;
       width:4px;
       height:4px;
       border-radius:50%;
       margin-right:1px;
-      background:#6c757d;
+      background: white;
       animation: wave 1.3s linear infinite;
 
       &:nth-child(2) {
@@ -70,7 +69,7 @@ export default {
     }
 
     30% {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
     }
   }
 </style>

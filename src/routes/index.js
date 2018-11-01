@@ -54,14 +54,19 @@ export default [
         component: () => import('@/views/Admin/Index.vue'),
         children: [
             {
-                path: '',
-                name: 'admin',
+                path: 'orders',
+                name: 'admin.orders',
                 component: () => import('@/views/Admin/AllOrders.vue'),
             },
             {
-                path: '/create',
+                path: 'create',
                 name: 'admin.createStoreItem',
                 component: () => import('@/views/Admin/NewStoreItem.vue'),
+            },
+            {
+                  path: 'products',
+                  name: 'admin.products',
+                  component: () => import('@/views/Admin/AllProducts.vue'),
             },
         ],
         // If the user needs to be authenticated to view this page.

@@ -31,31 +31,40 @@
 			<!--</small>-->
 			<!--</div>-->
 
-			<div>
-				<croppa v-model="myCroppa"
-								:width="300"
-								:height="200"
-								:quality="1"></croppa>
-				<small id="cropperHelp" class="form-text text-muted">Use mouse to move image mouse wheel to zoom in/out
-				</small>
-			</div>
 
-			<div class="form-check">
-				<label class="form-check-label">
-					<input type="checkbox" class="form-check-input" v-model="item.hidden">
-					Display
-				</label>
-			</div>
-			<button @click.prevent="create" class="btn btn-primary">Submit</button>
 		</form>
-		<div class="d-flex justify-content-center row">
-			<div class="col-xl-3 col-lg-6 mb-3">
-				<card
-					:item="item"
-				></card>
-			</div>
+
+      <div class="row">
+        <div class="col-6"><div>
+          <croppa v-model="myCroppa"
+                  :width="300"
+                  :height="200"
+                  :quality="1"></croppa>
+          <small id="cropperHelp" class="form-text text-muted">Use mouse to move image mouse wheel to zoom in/out
+          </small>
+        </div>
+
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" v-model="item.hidden">
+              Display
+            </label>
+          </div>
+          <button @click.prevent="show" class="btn btn-primary">Show</button>
+          <button @click.prevent="create" class="btn btn-primary">Submit</button></div>
+        <div class="col-6"><div class="d-flex justify-content-center row">
+          <div class="col-xl-6 col-lg-8 mb-3">
+            <card
+              v-if="showCard"
+              :item="item"
+              class="card"
+            >
+              <img :src="image" alt="">
+            </card>
+          </div></div></div>
+      </div>
 			<!--<img src="http://localhost:8081/api/image/5bb0dd0e195761240c07c799" alt="">-->
-		</div>
+
 	</div>
 </template>
 
@@ -69,6 +78,8 @@
 		data() {
 			return {
 				myCroppa: {},
+        showCard: false,
+        image: "",
 				item: {
 					title: '',
           description: '',
@@ -86,8 +97,12 @@
 					// write code to upload the cropped image file (a file is a blob)
 				}, 'image/jpeg', 0.8) // 80% compressed jpeg file
 			},
+      show() {
+			  this.showCard = true;
+        this.image = this.myCroppa.generateDataUrl('image/jpeg');
+      },
 			create() {
-				this.item.image = this.myCroppa.generateDataUrl('image/jpeg')
+
 				console.log(this.item)
 				let image;
 				this.myCroppa.generateBlob((blob) => {
@@ -110,5 +125,14 @@
 </script>
 
 <style lang="scss" type="scss" scoped>
-
+  img {
+    overflow: hidden;
+    height: 200px;
+    width: 300px;
+    min-height: 100px;
+    max-width: 500px;
+  }
+  .card{
+    max-width: 300px;
+  }
 </style>

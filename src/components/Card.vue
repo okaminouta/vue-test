@@ -1,7 +1,9 @@
 <template>
 
     <div class="card w-100 h-100">
+      <slot>
         <img v-if="item.cover" class="card-img-top" :src="`http://localhost:8081/api/image/${item.cover}`" alt="Card image cap">
+      </slot>
         <!--<img class="card-img-top" src="http://localhost:8081/api/image/5bb0dd0e195761240c07c799" alt="Card image cap">-->
         <div class="card-title px-3 py-1 font-weight-bold text-center"> {{item.title}}</div>
         <div class="card-title d-flex justify-content-between px-3 align-items-center xwr">Price: {{item.price}}

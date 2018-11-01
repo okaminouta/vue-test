@@ -10,7 +10,7 @@
             <div class="header-logo small-logo" key="small" v-else><p class="m-0">HotChocolate</p></div>
           </transition>
             <div class="nav">
-                <div><router-link tag="span" class="cursor-pointer" :to="{ name: 'admin'}">admin</router-link></div>
+                <div><router-link tag="span" class="cursor-pointer" :to="{ name: 'admin.orders'}">admin</router-link></div>
                 <div><router-link tag="span" class="cursor-pointer" :to="{ name: 'home.index'}">home</router-link></div>
                 <div><router-link tag="span" class="cursor-pointer" :to="{ name: 'home.cart'}">cart</router-link></div>
             </div>

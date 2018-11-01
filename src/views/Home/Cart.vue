@@ -6,9 +6,11 @@
         <p class="text-right">Cумма</p>
       </div>
     </div>
-    <div class="row cart-item justify-content-end" v-for="(product,i) in products">
+    <div class="row cart-item justify-content-end my-3" v-for="(product,i) in products">
       <div class="col-3 p-0">
-        <img src="@/assets/images/logo.jpg" alt="" class="cart-item-image">
+        <img v-if="product.cover" class="card-img-top" :src="`http://localhost:8081/api/image/${product.cover}`" alt="Card image cap">
+
+        <!--<img src="@/assets/images/logo.jpg" alt="" class="cart-item-image">-->
 
       </div>
       <div class="col ">
@@ -25,7 +27,7 @@
       </div>
 
       <div class="col-2 col-xl-1 align-items-center  d-inline-flex text-right"><p
-        class="text-right w-100 m-0 font-weight-bold font-20">{{ summ(products[0].price, products[0].quantity) }} <span
+        class="text-right w-100 m-0 font-weight-bold font-20">{{ summ(product.price, product.quantity) }} <span
         class="text-muted">grn </span></p>
       </div>
     </div>
@@ -33,7 +35,7 @@
 
       <div class="product-total-label mr-2 d-inline-flex cart-actions font-weight-bold">
         <span class="cart-action-summ text-muted mr-3">Итоговая цена: </span>
-        <span class="  bold-text p-2 cart-action-total-value font-20"> {{12}}  ₴</span>
+        <span class="  bold-text p-2 cart-action-total-value font-20"> {{ total }}  ₴</span>
       </div>
     </div>
     <div class="row justify-content-end">
@@ -46,7 +48,7 @@
 </template>
 
 <script>
-
+import {mapState} from "vuex";
 
   export default {
     mounted() {
@@ -55,16 +57,28 @@
     components: {},
     data() {
       return {
-        products: [
-          {
-            title: 'Lorem ipsum dolor sit amet',
-            price: 10,
-            quantity: 5,
-          }
-        ]
+        // products: [
+        //   {
+        //     title: 'Lorem ipsum dolor sit amet',
+        //     price: 10,
+        //     quantity: 5,
+        //   }
+        // ]
       }
     },
-    computed: {},
+    computed: {
+      ...mapState({
+        products: state => state.products.cart
+      }),
+      total() {
+        let total = 0;
+        this.products.forEach( el =>{
+          let summ = el.price * el.quantity;
+          total += summ;
+        });
+        return total;
+      }
+    },
     methods: {
       summ(price, quantity) {
         return price * quantity;

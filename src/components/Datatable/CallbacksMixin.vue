@@ -30,6 +30,9 @@ export default {
     phone(phone) {
       return `(${phone.substr(0, 3)}) ${phone.substr(3, 3)}-${phone.substr(6, 4)}`;
     },
+    desc(val) {
+      return `<p class="description">${val}</p>`;
+    },
   },
 };
 </script>
