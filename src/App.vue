@@ -112,7 +112,7 @@
 
     .content-overlay {
         background: #fff;
-        min-height: 100vh;
+        min-height: 90vh;
         padding: 1em;
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
@@ -221,7 +221,7 @@
         z-index: -1;
     }
 .fixed-header-app-padding {
-    padding-top: 20vh !important;
+    padding-top: 18vh !important;
 }
 
 .nav {

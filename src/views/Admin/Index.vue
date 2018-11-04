@@ -34,7 +34,7 @@
 .segmented-control {
   display: table;
   width: 50%;
-  margin: 2em 0;
+  margin-bottom: 1em;
   padding: 0;
 }
 

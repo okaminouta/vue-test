@@ -1,38 +1,40 @@
 <template>
-	<div>
-		<div>create order</div>
-		<form>
-			<div class="form-group">
-				<label for="itemTitle">Title</label>
-				<input type="text" class="form-control" id="itemTitle" aria-describedby="emailHelp" v-model="item.title"
-							 placeholder="Enter title">
-				<small id="titleHelp" class="form-text text-muted">We'll never share your email with anyone else.
-				</small>
-			</div>
+  <div class="row">
+    <div class="col-6">
+      <h1>Create order</h1>
+      <form>
+        <div class="form-group">
+          <label for="itemTitle">Title</label>
+          <input type="text" class="form-control" id="itemTitle" aria-describedby="emailHelp" v-model="item.title"
+                 placeholder="Enter title">
+          <small id="titleHelp" class="form-text text-muted">We'll never share your email with anyone else.
+          </small>
+        </div>
 
-			<div class="form-group">
-				<label for="ItemDesc">Descroption</label>
-				<textarea class="form-control" id="ItemDesc" rows="3" v-model="item.description"></textarea>
-			</div>
+        <div class="form-group">
+          <label for="ItemDesc">Descroption</label>
+          <textarea class="form-control" id="ItemDesc" rows="3" v-model="item.description"></textarea>
+        </div>
 
-			<div class="form-group">
-				<label for="itemPrice">Price</label>
-				<input type="tel" class="form-control" id="itemPrice" aria-describedby="emailHelp"
-							 placeholder="Enter price" v-model="item.price">
-				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.
-				</small>
-			</div>
+        <div class="form-group">
+          <label for="itemPrice">Price</label>
+          <input type="tel" class="form-control" id="itemPrice" aria-describedby="emailHelp"
+                 placeholder="Enter price" v-model="item.price"
+                 @keydown="validateInput($event)">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.
+          </small>
+        </div>
 
-			<!--<div class="form-group">-->
-			<!--<label for="exampleInputFile">File input</label>-->
-			<!--<input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">-->
-			<!--<small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the-->
-			<!--above input. It's a bit lighter and easily wraps to a new line.-->
-			<!--</small>-->
-			<!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<label for="exampleInputFile">File input</label>-->
+        <!--<input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">-->
+        <!--<small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the-->
+        <!--above input. It's a bit lighter and easily wraps to a new line.-->
+        <!--</small>-->
+        <!--</div>-->
 
 
-		</form>
+      </form>
 
       <div class="row">
         <div class="col-6"><div>
@@ -52,20 +54,26 @@
           </div>
           <button @click.prevent="show" class="btn btn-primary">Show</button>
           <button @click.prevent="create" class="btn btn-primary">Submit</button></div>
-        <div class="col-6"><div class="d-flex justify-content-center row">
-          <div class="col-xl-6 col-lg-8 mb-3">
-            <card
-              v-if="showCard"
-              :item="item"
-              class="card"
-            >
-              <img :src="image" alt="">
-            </card>
-          </div></div></div>
-      </div>
-			<!--<img src="http://localhost:8081/api/image/5bb0dd0e195761240c07c799" alt="">-->
 
-	</div>
+      </div>
+      <!--<img src="http://localhost:8081/api/image/5bb0dd0e195761240c07c799" alt="">-->
+
+    </div>
+    <div class="col-6">
+      <div class="d-flex justify-content-center align-items-center row h-100">
+        <div class="col-xl-6 col-lg-8 mb-3">
+          <card
+            v-if="showCard"
+            :item="item"
+            class="card"
+          >
+            <img :src="image" alt="">
+          </card>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -83,7 +91,7 @@
 				item: {
 					title: '',
           description: '',
-					price: '0',
+					price: null,
 					image: '',
 					hidden: false
 				}
@@ -113,7 +121,17 @@
 				// this.item.image = '';
 
 				// this.$store.commit('products/createProduct', Object.assign({}, this.item) )
-			}
+			},
+      validateInput(e) {
+        let key = e.keyCode ? e.keyCode : e.which;
+
+        if (!([8, 9, 13, 27, 46, 110, 190].indexOf(key) !== -1 ||
+          (key === 65 && (e.ctrlKey || e.metaKey)) ||
+          (key >= 35 && key <= 40) ||
+          (key >= 48 && key <= 57 && !(e.shiftKey || e.altKey)) ||
+          (key >= 96 && key <= 105)
+        )) e.preventDefault();
+      }
 		},
 		watch: {
 			myCroppa() {

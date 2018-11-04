@@ -1,5 +1,6 @@
 <template>
     <div>
+      <h1>All products</h1>
         <div class="col-12">
           <datatable
             url="http://localhost:8081/api/admin/products"

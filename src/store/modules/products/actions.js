@@ -29,5 +29,11 @@ export default {
 			commit('loadProducts', res.data.data)
 		},
 			(err)=> console.log(err));
-	}
+	},
+  createOrder: ({commit, state}, payload) => new Promise((resolve, reject) => {
+    console.log('asda')
+		Vue.$http.post('http://localhost:8081/api/orders', payload)
+      .then(() => resolve())
+      .catch(() => reject());
+	}),
 };

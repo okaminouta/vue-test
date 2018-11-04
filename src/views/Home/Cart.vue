@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="row justify-content-end">
-      <button class="btn  btn-success font-weight-bold">Оформить заказ</button>
+      <button class="btn  btn-success font-weight-bold" @click="createOrder">Оформить заказ</button>
 
 
     </div>
@@ -96,6 +96,17 @@ import {mapState} from "vuex";
           (key >= 48 && key <= 57 && !(e.shiftKey || e.altKey)) ||
           (key >= 96 && key <= 105)
         )) e.preventDefault();
+      },
+      createOrder() {
+        console.log(this.products)
+        let req = this.products.map((el)=>{
+          return {
+            id: el._id,
+            quantity: el.quantity
+          }
+        })
+        console.log(req)
+        this.$store.dispatch("products/createOrder", req).then(()=>{console.log('finished')})
       }
 
     },

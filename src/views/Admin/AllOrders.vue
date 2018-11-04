@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>all orders</div>
+        <h1>All orders</h1>
         <div class="col-12">
           <Datatable />
         </div>
