@@ -43,6 +43,7 @@ import "./plugins/Spinner";
 import './assets/stylus/app.styl';
 import 'vue-croppa/dist/vue-croppa.css'
 import "./main.scss";
+import "vue-material-design-icons/styles.css"
 
 /* ============
  * Main App
@@ -55,6 +56,12 @@ import VModal from 'vue-js-modal'
 
 Vue.use(VModal, { dynamic: true })
 Vue.use(Croppa)
+import Eye from "vue-material-design-icons/Eye.vue"
+import EyeOff from "vue-material-design-icons/EyeOff.vue"
+
+Vue.component("eye-off-icon", EyeOff)
+Vue.component("eye-icon", Eye)
+
 
 
 import App from './App.vue';

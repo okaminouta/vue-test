@@ -5,14 +5,12 @@ const mongoose = require('mongoose');
 const orderSchema = new mongoose.Schema({
   customer: {type: Number, required: true},
   products: {
-    type: [{
-      product: Number,
-      quantity: Number
-    }],
-    default: [], required: true
+    type: [],
+    default: [],
+    required: true,
   },
-  total: {type: Number, required: true},
   commentary: {type: String, required: false},
+  created: {type: Date, default: Date.now},
 
 });
 

@@ -2,13 +2,16 @@
   <div class=" pb-3 app-container">
     <div class="row cart">
       <div class="col-12 font-weight-bold">
-        <h2>Корзина</h2>
-        <p class="text-right">Cумма</p>
+        <h2 v-if="stage === 1">Корзина</h2>
+        <h2 v-if="stage === 2">Oформление заказа</h2>
+        <p class="text-right" v-if="stage === 1">Cумма</p>
       </div>
     </div>
+    <div v-if="stage === 1">
     <div class="row cart-item justify-content-end my-3" v-for="(product,i) in products">
       <div class="col-3 p-0">
-        <img v-if="product.cover" class="card-img-top" :src="`http://localhost:8081/api/image/${product.cover}`" alt="Card image cap">
+        <img v-if="product.cover" class="card-img-top" :src="`http://localhost:8081/api/image/${product.cover}`"
+             alt="Card image cap">
 
         <!--<img src="@/assets/images/logo.jpg" alt="" class="cart-item-image">-->
 
@@ -40,15 +43,87 @@
     </div>
     <div class="row justify-content-end">
       <button class="btn  btn-success font-weight-bold" @click="createOrder">Оформить заказ</button>
+    </div>
+    </div>
 
+    <div class="row justify-content-center" v-if="stage === 2">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="inlineFormInputGroup">Номер телефона</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">+380</div>
+            </div>
+            <input type="text" class="form-control" id="inlineFormInputGroup"
+                   @keydown="validateInput($event)">
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="btn btn-primary" @click="createAccount"> {{ withAccount ? 'Не создавать' : 'Создать аккаунт'}}</div>
+        </div>
+        <div class="row justify-content-center mb-2">
+          <small id="accCreation" class="form-text text-muted" v-if="withAccount">Акаунт будет создан при подтверждении заказа</small>
+        </div>
+        <div v-if="withAccount">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Емейл</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                 >
+        </div>
+
+        <div class="form-group">
+          <label for="inlineFormInputGroup2">Пароль</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text p-0">
+                <div class="btn btn-w-icon" @click="showPass('pass')">
+                  <eye-icon class="md-icon" v-if="visiblePass"/>
+                  <eye-off-icon class="md-icon" v-else/>
+                </div>
+              </div>
+            </div>
+            <input :type="visiblePass ? 'text':'password'" class="form-control" id="inlineFormInputGroup2"
+                   @keydown="validateInput($event)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inlineFormInputGroup3">Подтверждение пароля</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text p-0">
+                <div class="btn btn-w-icon" @click="showPass('conf')">
+                  <eye-icon class="md-icon" v-if="visibleConfPass"/>
+                  <eye-off-icon class="md-icon" v-else/>
+                </div>
+              </div>
+            </div>
+            <input :type="visibleConfPass ? 'text':'password'" class="form-control" id="inlineFormInputGroup3"
+                   @keydown="validateInput($event)">
+          </div>
+        </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Коментарий к заказу*</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+
+        <!--<div class="form-check">-->
+          <!--<input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+          <!--<label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+        <!--</div>-->
+        <button class="btn btn-success">Оформить заказ</button>
+      </div>
 
     </div>
+
   </div>
 
 </template>
 
 <script>
-import {mapState} from "vuex";
+  import {mapState} from "vuex";
 
   export default {
     mounted() {
@@ -64,6 +139,10 @@ import {mapState} from "vuex";
         //     quantity: 5,
         //   }
         // ]
+        stage: 1,
+        visiblePass: false,
+        visibleConfPass: false,
+        withAccount: false,
       }
     },
     computed: {
@@ -72,7 +151,7 @@ import {mapState} from "vuex";
       }),
       total() {
         let total = 0;
-        this.products.forEach( el =>{
+        this.products.forEach(el => {
           let summ = el.price * el.quantity;
           total += summ;
         });
@@ -99,15 +178,27 @@ import {mapState} from "vuex";
       },
       createOrder() {
         console.log(this.products)
-        let req = this.products.map((el)=>{
+        this.stage++;
+        let req = this.products.map((el) => {
           return {
             id: el._id,
             quantity: el.quantity
           }
         })
         console.log(req)
-        this.$store.dispatch("products/createOrder", req).then(()=>{console.log('finished')})
+        this.$store.dispatch("products/createOrder", req).then(() => {
+          console.log('finished')
+        })
+      },
+      showPass(val) {
+        if (val === 'pass') this.visiblePass = !this.visiblePass;
+        if (val === 'conf' )this.visibleConfPass = !this.visibleConfPass;
+      },
+      createAccount(){
+        this.withAccount = !this.withAccount;
+
       }
+
 
     },
   };
@@ -147,6 +238,14 @@ import {mapState} from "vuex";
         text-align: center;
       }
     }
+  }
+
+  .btn-w-icon {
+    padding: 0 7px;
+  }
+
+  .md-icon {
+    font-size: 23px;
   }
 
   .cart-action {

@@ -18,7 +18,7 @@
         <div class="w-100 content-overlay ">
             <router-view/>
         </div>
-        <footer class="align-items-center">
+        <footer class="align-items-center footer">
             <div class="row m-0 justify-content-center py-3">
                 <img src="./assets/images/vk-brands.svg" alt="vk">
                 <img src="./assets/images/facebook-square-brands.svg" alt="fb">
@@ -26,7 +26,7 @@
                 <img src="./assets/images/twitter-brands.svg" alt="tw">
                 <img src="./assets/images/linkedin-in-brands.svg" alt="">
             </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center m-0">
                 2018
                 <img class="copy" src="./assets/images/copyright-regular.svg" alt=""></div>
         </footer>
@@ -118,6 +118,14 @@
         transform: translateZ(0);
         z-index: 10;
     }
+    /*.content-overlay-fixed {*/
+        /*background: #fff;*/
+        /*min-height: 70vh;*/
+        /*padding: 1em;*/
+        /*-webkit-transform: translateZ(0);*/
+        /*transform: translateZ(0);*/
+        /*z-index: 10;*/
+    /*}*/
 
     .header {
         color: white;
