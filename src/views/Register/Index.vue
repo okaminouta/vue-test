@@ -1,155 +1,186 @@
 <template>
-  <v-layout>
-    <v-card contextual-style="dark">
-      <span slot="header">
-        Register
-      </span>
-      <div slot="body">
-        <form @submit.prevent="register(user)">
-          <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
+  <div class="p-5">
+    <div class="col-12 pb-3 p-0 modal-header">
+      <h5 class="modal-title font-weight-bold">Register</h5>
+      <button type="button" class="font-weight-bold close" @click="$emit('close')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <form @submit.prevent="register(user)" class="px-3 pt-4">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
                 <span class="input-group-text">
                   <i class="fa fa-user fa-fw"/>
                 </span>
-              </div>
-              <input
-                v-model="user.firstName"
-                type="text"
-                placeholder="First name"
-                class="form-control"
-              >
-            </div>
           </div>
-          <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
+          <input
+            v-model="user.name"
+            type="text"
+            placeholder="First name"
+            class="form-control"
+          >
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <!--<div class="input-group-prepend">-->
+          <!--<span class="input-group-text">-->
+          <!--<i class="fa fa-user fa-fw"/>-->
+          <!--</span>-->
+          <!--</div>-->
+          <div class="input-group-prepend">
                 <span class="input-group-text">
-                  <i class="fa fa-user fa-fw"/>
+                  +380
                 </span>
-              </div>
-              <input
-                v-model="user.lastName"
-                type="text"
-                placeholder="Last name"
-                class="form-control"
-              >
-            </div>
           </div>
-          <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
+          <input
+            v-model="user.phone"
+            type="text"
+            placeholder="Номер телефона"
+            @keydown="validateInput($event)"
+            class="form-control"
+          >
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
                 <span class="input-group-text">
                   <i class="fa fa-envelope fa-fw"/>
                 </span>
-              </div>
-              <input
-                v-model="user.email"
-                type="email"
-                placeholder="Email"
-                class="form-control"
-              >
-            </div>
           </div>
-          <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
+          <input
+            v-model="user.email"
+            type="email"
+            placeholder="Email"
+            class="form-control"
+          >
+        </div>
+      </div>
+      <div class="form-group position-relative">
+        <div class="input-group">
+          <div class="input-group-prepend">
                 <span class="input-group-text">
                   <i class="fa fa-lock fa-fw"/>
                 </span>
-              </div>
-              <input
-                v-model="user.password"
-                type="password"
-                placeholder="Password"
-                class="form-control"
-              >
-            </div>
           </div>
-          <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
+          <div class="input-group-prepend position-absolute password-icon" @click="showPass('pass')">
+                <span class="input-group-text">
+                 <eye-icon class="md-icon" v-if="visiblePass"/>
+                  <eye-off-icon class="md-icon" v-else/>
+                </span>
+          </div>
+          <input
+            v-model="user.password"
+            :type="visiblePass ? 'text':'password'"
+            placeholder="Password"
+            class="form-control"
+          >
+        </div>
+      </div>
+      <div class="form-group position-relative">
+        <div class="input-group">
+          <div class="input-group-prepend">
                 <span class="input-group-text">
                   <i class="fa fa-lock fa-fw"/>
                 </span>
-              </div>
-              <input
-                v-model="user.passwordConfirm"
-                type="password"
-                placeholder="Confirm password"
-                class="form-control"
-              >
-            </div>
           </div>
-          <div class="form-group">
-            <button class="btn btn-outline-primary">
-              Register
-            </button>
+          <div class="input-group-prepend position-absolute password-icon" @click="showPass('conf')">
+                <span class="input-group-text">
+                 <eye-icon class="md-icon" v-if="visibleConfPass"/>
+                  <eye-off-icon class="md-icon" v-else/>
+                </span>
           </div>
-        </form>
+          <input
+            v-model="user.passwordConfirm"
+            :type="visibleConfPass ? 'text':'password'"
+            placeholder="Confirm password"
+            class="form-control"
+          >
+        </div>
       </div>
-      <div slot="footer">
-        Already got an account?
-        <router-link :to="{ name: 'login.index' }">Login</router-link>
+      <div class="form-group px-4 pt-3">
+        <button class="btn btn-outline-primary w-100">
+          Register
+        </button>
       </div>
-    </v-card>
-  </v-layout>
+    </form>
+    <!--</div>-->
+    <div slot="footer" class="text-center pt-2">
+      Already got an account?
+      <a href="#" @click.prevent="login">Login</a>
+    </div>
+    <!--</v-card>-->
+    <!--</v-layout>-->
+  </div>
 </template>
 
 <script>
-/* ============
- * Register Index Page
- * ============
- *
- * Page where the user can register.
- */
+  import Login from '@/views/Login/Index.vue';
 
-import VLayout from '@/layouts/Minimal.vue';
-import VCard from '@/components/Card.vue';
-
-export default {
-  /**
-   * The name of the page.
-   */
-  name: 'RegisterIndex',
-
-  /**
-   * The components the page can use.
-   */
-  components: {
-    VLayout,
-    VCard,
-  },
-
-  /**
-   * The data that can be used by the page.
-   *
-   * @returns {Object} The view-model data.
-   */
-  data() {
-    return {
-      user: {
-        firstName: null,
-        lastName: null,
-        email: null,
-        passwordConfirm: null,
-        password: null,
-      },
-    };
-  },
-
-  /**
-   * The methods the page can use.
-   */
-  methods: {
-    /**
-     * Will register the user.
-     *
-     * @param {Object} user The user to be registered.
-     */
-    register(user) {
-      this.$store.dispatch('auth/register', user);
+  export default {
+    name: 'RegisterIndex',
+    components: {},
+    data() {
+      return {
+        user: {
+          name: '',
+          phone: '',
+          email: '',
+          passwordConfirm: '',
+          password: '',
+        },
+        visiblePass: false,
+        visibleConfPass: false,
+      };
     },
-  },
-};
+    computed: {
+      validate (){
+        return (this.user.phone.length === 9) &&
+          (this.user.passwordConfirm === this.user.password) &&
+          (this.user.email.trim().length > 6) &&
+          (this.user.password.trim().length > 6) &&
+          (this.user.name.trim().length > 1);
+      }
+    },
+    methods: {
+      register(user) {
+        if (this.validate) {
+          this.$store.dispatch('auth/register', user);
+        }
+      },
+      showPass(val) {
+        if (val === 'pass') this.visiblePass = !this.visiblePass;
+        if (val === 'conf') this.visibleConfPass = !this.visibleConfPass;
+      },
+      login() {
+        this.$modal.show(Login, {}, {
+          draggable: false,
+          height: 'auto',
+          name: 'login'
+        })
+        this.$modal.hide('register')
+      },
+      validateInput(e) {
+        let key = e.keyCode ? e.keyCode : e.which;
+        if ([8, 46].indexOf(key) !== -1) return;
+        if (!([8, 9, 13, 27, 46, 110, 190].indexOf(key) !== -1 ||
+          (key === 65 && (e.ctrlKey || e.metaKey)) ||
+          (key >= 35 && key <= 40) ||
+          (key >= 48 && key <= 57 && !(e.shiftKey || e.altKey)) ||
+          (key >= 96 && key <= 105)
+        ) || (this.user.phone && this.user.phone.length >= 9)) e.preventDefault();
+      },
+    },
+  };
 </script>
+
+<style>
+  .password-icon {
+    right: 0;
+    z-index: 99;
+    height: 100%;
+  }
+</style>

@@ -14,24 +14,24 @@ export const check = ({ commit }) => {
   commit(types.CHECK);
 };
 
-export const register = ({ commit }) => {
-  /*
-   * Normally you would use a proxy to register the user:
-   *
-   * new Proxy()
-   *  .register(payload)
-   *  .then((response) => {
-   *    commit(types.REGISTER, response);
-   *  })
-   *  .catch(() => {
-   *    console.log('Request failed...');
-   *  });
-   */
-  commit(types.LOGIN, 'RandomGeneratedToken');
-  Vue.router.push({
-    name: 'home.index',
-  });
-};
+// export const register = ({ commit }) => {
+//   /*
+//    * Normally you would use a proxy to register the user:
+//    *
+//    * new Proxy()
+//    *  .register(payload)
+//    *  .then((response) => {
+//    *    commit(types.REGISTER, response);
+//    *  })
+//    *  .catch(() => {
+//    *    console.log('Request failed...');
+//    *  });
+//    */
+//   commit(types.LOGIN, 'RandomGeneratedToken');
+//   Vue.router.push({
+//     name: 'home.index',
+//   });
+// };
 
 export const login = ({ commit }) => {
   /*
@@ -67,7 +67,16 @@ export const logout = ({ commit }) => {
 
 export default {
   check,
-  register,
   login,
   logout,
+  register: ({commit, state}, payload) => new Promise((resolve, reject) => {
+    console.log(payload)
+    Vue.$http.post('http://localhost:8081/api/register', payload)
+      .then((res) => {
+        console.log(res)
+        resolve();
+        // commit(types.LOGIN, 'RandomGeneratedToken');
+      })
+      .catch(() => reject());
+  }),
 };

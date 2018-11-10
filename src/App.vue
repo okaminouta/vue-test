@@ -13,6 +13,8 @@
                 <div><router-link tag="span" class="cursor-pointer" :to="{ name: 'admin.orders'}">admin</router-link></div>
                 <div><router-link tag="span" class="cursor-pointer" :to="{ name: 'home.index'}">home</router-link></div>
                 <div><router-link tag="span" class="cursor-pointer" :to="{ name: 'home.cart'}">cart</router-link></div>
+                <div @click="login"><span>login</span></div>
+                <div @click="register"><span>register</span></div>
             </div>
         </div>
         <div class="w-100 content-overlay ">
@@ -34,12 +36,8 @@
     </div>
 </template>
 <script>
-    /* ============
-     * Entry Point
-     * ============
-     *
-     * The entry point of the application.
-     */
+  import Login from '@/views/Login/Index.vue';
+  import Register from '@/views/Register/Index.vue';
 
     export default {
         /**
@@ -67,7 +65,21 @@
             handleScroll() {
                 console.log(window.scrollY)
                 this.scroll = window.scrollY;
-            }
+            },
+          login() {
+            this.$modal.show(Login, {}, {
+              draggable: false,
+              height: 'auto',
+              name: 'login'
+            })
+          },
+          register() {
+            this.$modal.show(Register, {}, {
+              draggable: false,
+              height: 'auto',
+              name: 'register'
+            })
+          }
         },
         mounted() {
             window.addEventListener('scroll', this.handleScroll);

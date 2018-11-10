@@ -8,42 +8,42 @@
       </div>
     </div>
     <div v-if="stage === 1">
-    <div class="row cart-item justify-content-end my-3" v-for="(product,i) in products">
-      <div class="col-3 p-0">
-        <img v-if="product.cover" class="card-img-top" :src="`http://localhost:8081/api/image/${product.cover}`"
-             alt="Card image cap">
+      <div class="row cart-item justify-content-end my-3" v-for="(product,i) in products">
+        <div class="col-3 p-0">
+          <img v-if="product.cover" class="card-img-top" :src="`http://localhost:8081/api/image/${product.cover}`"
+               alt="Card image cap">
 
-        <!--<img src="@/assets/images/logo.jpg" alt="" class="cart-item-image">-->
+          <!--<img src="@/assets/images/logo.jpg" alt="" class="cart-item-image">-->
 
-      </div>
-      <div class="col ">
-        <p class="cart-item-title">{{product.title}}</p>
-        <p class="cart-item-price text-muted">Price: {{product.price}} Грн</p>
-      </div>
-      <div class="col-2 col-xl-2 text-right  align-items-center d-inline-flex">
+        </div>
+        <div class="col ">
+          <p class="cart-item-title">{{product.title}}</p>
+          <p class="cart-item-price text-muted">Price: {{product.price}} Грн</p>
+        </div>
+        <div class="col-2 col-xl-2 text-right  align-items-center d-inline-flex">
         <span class="btn cart-item-quantity-less cursor-pointer"
               @click="changeQuantity(-1, product.quantity, i)">-</span>
-        <input class=" d-inline-flex cart-item-quantity-value" v-model="product.quantity"
-               @keydown="validateInput($event)"/>
-        <span class="btn cart-item-quantity-more cursor-pointer"
-              @click="changeQuantity(1, product.quantity, i)">+</span>
-      </div>
+          <input class=" d-inline-flex cart-item-quantity-value" v-model="product.quantity"
+                 @keydown="validateInput($event)"/>
+          <span class="btn cart-item-quantity-more cursor-pointer"
+                @click="changeQuantity(1, product.quantity, i)">+</span>
+        </div>
 
-      <div class="col-2 col-xl-1 align-items-center  d-inline-flex text-right"><p
-        class="text-right w-100 m-0 font-weight-bold font-20">{{ summ(product.price, product.quantity) }} <span
-        class="text-muted">grn </span></p>
+        <div class="col-2 col-xl-1 align-items-center  d-inline-flex text-right"><p
+          class="text-right w-100 m-0 font-weight-bold font-20">{{ summ(product.price, product.quantity) }} <span
+          class="text-muted">grn </span></p>
+        </div>
       </div>
-    </div>
-    <div class="row justify-content-end my-4">
+      <div class="row justify-content-end my-4">
 
-      <div class="product-total-label mr-2 d-inline-flex cart-actions font-weight-bold">
-        <span class="cart-action-summ text-muted mr-3">Итоговая цена: </span>
-        <span class="  bold-text p-2 cart-action-total-value font-20"> {{ total }}  ₴</span>
+        <div class="product-total-label mr-2 d-inline-flex cart-actions font-weight-bold">
+          <span class="cart-action-summ text-muted mr-3">Итоговая цена: </span>
+          <span class="  bold-text p-2 cart-action-total-value font-20"> {{ total }}  ₴</span>
+        </div>
       </div>
-    </div>
-    <div class="row justify-content-end">
-      <button class="btn  btn-success font-weight-bold" @click="createOrder">Оформить заказ</button>
-    </div>
+      <div class="row justify-content-end">
+        <button class="btn  btn-success font-weight-bold" @click="createOrder">Оформить заказ</button>
+      </div>
     </div>
 
     <div class="row justify-content-center" v-if="stage === 2">
@@ -59,49 +59,16 @@
           </div>
         </div>
         <div class="row justify-content-center">
-          <div class="btn btn-primary" @click="createAccount"> {{ withAccount ? 'Не создавать' : 'Создать аккаунт'}}</div>
+          <div slot="footer" class="text-center pt-2">
+            Already got an account?
+            <a href="#" @click.prevent="login">Login</a><br>
+            <a href="#" @click.prevent="register">Register</a>
+          </div>
         </div>
         <div class="row justify-content-center mb-2">
-          <small id="accCreation" class="form-text text-muted" v-if="withAccount">Акаунт будет создан при подтверждении заказа</small>
-        </div>
-        <div v-if="withAccount">
-        <div class="form-group">
-          <label for="exampleInputEmail1">Емейл</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                 >
-        </div>
-
-        <div class="form-group">
-          <label for="inlineFormInputGroup2">Пароль</label>
-          <div class="input-group mb-2">
-            <div class="input-group-prepend">
-              <div class="input-group-text p-0">
-                <div class="btn btn-w-icon" @click="showPass('pass')">
-                  <eye-icon class="md-icon" v-if="visiblePass"/>
-                  <eye-off-icon class="md-icon" v-else/>
-                </div>
-              </div>
-            </div>
-            <input :type="visiblePass ? 'text':'password'" class="form-control" id="inlineFormInputGroup2"
-                   @keydown="validateInput($event)">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="inlineFormInputGroup3">Подтверждение пароля</label>
-          <div class="input-group mb-2">
-            <div class="input-group-prepend">
-              <div class="input-group-text p-0">
-                <div class="btn btn-w-icon" @click="showPass('conf')">
-                  <eye-icon class="md-icon" v-if="visibleConfPass"/>
-                  <eye-off-icon class="md-icon" v-else/>
-                </div>
-              </div>
-            </div>
-            <input :type="visibleConfPass ? 'text':'password'" class="form-control" id="inlineFormInputGroup3"
-                   @keydown="validateInput($event)">
-          </div>
-        </div>
+          <small id="accCreation" class="form-text text-muted" v-if="withAccount">Акаунт будет создан при подтверждении
+            заказа
+          </small>
         </div>
 
         <div class="form-group">
@@ -110,8 +77,8 @@
         </div>
 
         <!--<div class="form-check">-->
-          <!--<input type="checkbox" class="form-check-input" id="exampleCheck1">-->
-          <!--<label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+        <!--<input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+        <!--<label class="form-check-label" for="exampleCheck1">Check me out</label>-->
         <!--</div>-->
         <button class="btn btn-success">Оформить заказ</button>
       </div>
@@ -124,6 +91,8 @@
 
 <script>
   import {mapState} from "vuex";
+  import Login from '@/views/Login/Index.vue';
+  import Register from '@/views/Register/Index.vue';
 
   export default {
     mounted() {
@@ -140,8 +109,7 @@
         //   }
         // ]
         stage: 1,
-        visiblePass: false,
-        visibleConfPass: false,
+
         withAccount: false,
       }
     },
@@ -190,13 +158,20 @@
           console.log('finished')
         })
       },
-      showPass(val) {
-        if (val === 'pass') this.visiblePass = !this.visiblePass;
-        if (val === 'conf' )this.visibleConfPass = !this.visibleConfPass;
-      },
-      createAccount(){
-        this.withAccount = !this.withAccount;
 
+      login() {
+        this.$modal.show(Login, {}, {
+          draggable: false,
+          height: 'auto',
+          name: 'login'
+        })
+      },
+      register() {
+        this.$modal.show(Register, {}, {
+          draggable: false,
+          height: 'auto',
+          name: 'register'
+        })
       }
 
 

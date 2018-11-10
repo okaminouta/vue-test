@@ -15,14 +15,12 @@ module.exports.register = function (req, res) {
       });
       return;
     }
-
     let user = new User();
-
     user.name = req.body.name;
     user.email = req.body.email;
+    user.phone = req.body.phone;
 
     user.setPassword(req.body.password);
-
     user.save(function (err) {
         if (err) {
             res.status(500);
