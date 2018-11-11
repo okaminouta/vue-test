@@ -33,7 +33,7 @@ router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);
 
 //order
-router.post('/orders',  ctrlOrders.orderCreate);
+router.post('/orders', auth,  ctrlOrders.orderCreate);
 
 // product
 router.get('/products', ctrlProducts.productGet);

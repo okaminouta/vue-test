@@ -100,6 +100,7 @@
             class="form-control"
           >
         </div>
+        <p v-if="!matchPasswords">not  matching</p>
       </div>
       <div class="form-group px-4 pt-3">
         <button class="btn btn-outline-primary w-100">
@@ -140,14 +141,24 @@
       validate (){
         return (this.user.phone.length === 9) &&
           (this.user.passwordConfirm === this.user.password) &&
-          (this.user.email.trim().length > 6) &&
-          (this.user.password.trim().length > 6) &&
+          (this.user.email.trim().length >= 6) &&
+          (this.user.password.trim().length >= 6) &&
           (this.user.name.trim().length > 1);
+      },
+      matchPasswords(){
+        return this.user.passwordConfirm === this.user.password;
       }
     },
     methods: {
       register(user) {
+        console.log((this.user.phone.length),
+          (this.user.phone.length === 9),
+          (this.user.passwordConfirm === this.user.password),
+          (this.user.email.trim().length > 6),
+          (this.user.password.trim().length > 6),
+          (this.user.name.trim().length > 1))
         if (this.validate) {
+          console.log('reg')
           this.$store.dispatch('auth/register', user);
         }
       },

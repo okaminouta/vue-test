@@ -73,14 +73,14 @@
 
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Коментарий к заказу*</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="commentary"></textarea>
         </div>
 
         <!--<div class="form-check">-->
         <!--<input type="checkbox" class="form-check-input" id="exampleCheck1">-->
         <!--<label class="form-check-label" for="exampleCheck1">Check me out</label>-->
         <!--</div>-->
-        <button class="btn btn-success">Оформить заказ</button>
+        <button class="btn btn-success" @click="createOrder">Оформить заказ</button>
       </div>
 
     </div>
@@ -109,13 +109,15 @@
         //   }
         // ]
         stage: 1,
-
+        commentary: '',
+        phone: '',
         withAccount: false,
       }
     },
     computed: {
       ...mapState({
-        products: state => state.products.cart
+        products: state => state.products.cart,
+        logged: state => state.auth.authenticated
       }),
       total() {
         let total = 0;
@@ -146,17 +148,24 @@
       },
       createOrder() {
         console.log(this.products)
-        this.stage++;
-        let req = this.products.map((el) => {
-          return {
-            id: el._id,
-            quantity: el.quantity
-          }
-        })
-        console.log(req)
-        this.$store.dispatch("products/createOrder", req).then(() => {
-          console.log('finished')
-        })
+        //
+        if (this.stage>1){
+          let products = this.products.map((el) => {
+            return {
+              id: el._id,
+              quantity: el.quantity
+            }
+          })
+          console.log(products)
+          this.$store.dispatch("products/createOrder", {
+            commentary: this.commentary,
+            phone: this.phone,
+          products
+          }).then(() => {
+            console.log('finished')
+          })
+        } else this.stage++;
+
       },
 
       login() {

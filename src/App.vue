@@ -1,12 +1,12 @@
 <!--npm run serve -->
 <template>
-    <div id="app" :class="[scroll > 90 ? 'fixed-header-app-padding':'']">
-        <div class="header" :class="[scroll > 90 ? 'fixed-header':'']">
+    <div id="app" :class="[fullHeadder ? 'fixed-header-app-padding':'']" :style="{'padding-top': fullHeadder ? '80px' : '30vh'}">
+        <div class="header" :class="[fullHeadder ? 'fixed-header':'']">
           <transition
             mode="out-in"
             name="fade"
             appear>
-            <div class="header-logo full-logo" key="full" v-if="scroll < 90"><p class="m-0">HotChocolate</p></div>
+            <div class="header-logo full-logo" key="full" v-if="!fullHeadder"><p class="m-0">HotChocolate</p></div>
             <div class="header-logo small-logo" key="small" v-else><p class="m-0">HotChocolate</p></div>
           </transition>
             <div class="nav">
@@ -17,7 +17,7 @@
                 <div @click="register"><span>register</span></div>
             </div>
         </div>
-        <div class="w-100 content-overlay ">
+        <div class="w-100 content-overlay " :style="{'min-height': fullHeadder ? '82vh' : '60vh'}">
             <router-view/>
         </div>
         <footer class="align-items-center footer">
@@ -61,6 +61,11 @@
                 scroll: false
             };
         },
+      computed: {
+          fullHeadder(){
+            return this.$route.name === 'home.index' ? this.scroll > 10 : true;
+          }
+      },
         methods: {
             handleScroll() {
                 console.log(window.scrollY)
@@ -111,20 +116,20 @@
         overflow: hidden;
         color: rgba(0, 0, 0, 0.87);
         margin: 0;
-        padding-top: 30vh;
+
         transition: all .2s ease-in;
         font-family: 'GS';
         font-size: 1rem;
     }
 
     .router-view {
-        padding-top: 30vh;
+        /*padding-top: 30vh;*/
         background: white;
     }
 
     .content-overlay {
         background: #fff;
-        min-height: 90vh;
+        /*min-height: 90vh;*/
         padding: 1em;
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
@@ -241,13 +246,14 @@
         z-index: -1;
     }
 .fixed-header-app-padding {
-    padding-top: 18vh !important;
+    /*padding-top: 18vh !important;*/
 }
 
 .nav {
     font-size: 20px;
     position: absolute;
-    top: 30px;
+    /*top: 30px;*/
+  bottom: 20px;
     right: 10px;
     div {
         padding: 0 10px;

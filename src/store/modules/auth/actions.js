@@ -67,7 +67,6 @@ export const logout = ({ commit }) => {
 
 export default {
   check,
-  login,
   logout,
   register: ({commit, state}, payload) => new Promise((resolve, reject) => {
     console.log(payload)
@@ -75,7 +74,17 @@ export default {
       .then((res) => {
         console.log(res)
         resolve();
-        // commit(types.LOGIN, 'RandomGeneratedToken');
+        commit(types.LOGIN, res.data.token);
+      })
+      .catch(() => reject());
+  }),
+  login: ({commit, state}, payload) => new Promise((resolve, reject) => {
+    console.log(payload)
+    Vue.$http.post('http://localhost:8081/api/login', payload)
+      .then((res) => {
+        console.log(res)
+        resolve();
+        commit(types.LOGIN, res.data.token);
       })
       .catch(() => reject());
   }),

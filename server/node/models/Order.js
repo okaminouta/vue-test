@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // const deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 const orderSchema = new mongoose.Schema({
-  customer: {type: Number, required: true},
+  customer: {type: String, required: true},
   products: {
     type: [],
     default: [],
